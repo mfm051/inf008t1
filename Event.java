@@ -1,28 +1,54 @@
 import java.util.Date;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
-public class Event {
+abstract class Event {
     private String title;
     private Date date;
-    private String place;
+    private String location;
     private int capacity;
     private String description;
-    private HashSet<Attendee> attendees;
+    private LinkedList<Attendee> attendees;
+    private String theme;
+    private int durationInMin;
 
-    public Event(String title, Date date, String place, int capacity, String description) {
+    public Event(String title, Date date, String location, int capacity, String description, String theme, int durationInMin) {
         this.title = title;
         this.date = date;
-        this.place = place;
+        this.location = location;
         this.capacity = capacity;
         this.description = description;
-        attendees = new HashSet<Attendee>();
+        attendees = new LinkedList<Attendee>();
+        this.theme = theme;
+        this.durationInMin = durationInMin;
     }
 
-    public void AddAttendee(Attendee attendee) {
+    public void AddAttendee(Attendee attendee) throws Exception {
+        if (remainingCapacity() <= 0)
+            throw new Exception("Evento lotado");
+
+        if (!acceptsAttendee(attendee))
+            throw new Exception("Participante não permitido no evento");
+
         attendees.add(attendee);
     }
 
-    public String GenerateCertificate(/* Attendee */) {
-        return "Stub";
+    abstract String getAttendeeCertificate(String attendeeName);
+
+    protected int remainingCapacity() { return capacity - attendees.size(); }
+
+    protected Attendee findAttendeeByName(String attendeeName) {
+        Attendee attendee = attendees.getFirst();
+        ListIterator<Attendee> attendeesIterator = attendees.listIterator(0);
+
+        while (attendee != null) {
+            if (attendee.getName() == attendeeName) return attendee;
+
+            attendee = attendeesIterator.next();
+        }
+
+        return attendee;
     }
+
+    protected boolean acceptsAttendee(Attendee attendee) { return true; }
 }
