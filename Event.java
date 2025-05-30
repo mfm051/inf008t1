@@ -23,7 +23,7 @@ abstract class Event {
         this.durationInMin = durationInMin;
     }
 
-    public void AddAttendee(Attendee attendee) throws Exception {
+    public void addAttendee(Attendee attendee) throws Exception {
         if (remainingCapacity() <= 0)
             throw new Exception("Evento lotado");
 
@@ -33,22 +33,18 @@ abstract class Event {
         attendees.add(attendee);
     }
 
-    abstract String getAttendeeCertificate(String attendeeName);
+    public String getAttendeeCertificate(Attendee attendee) throws Exception {
+        if (!attendees.contains(attendee))
+            throw new Exception("Participante não cadastrado no evento");
+
+        return "Informamos que o participante " + attendee.getName() + 
+                " participou do " + getEventType() + " " + title + " em " + date.toString();
+    }
 
     protected int remainingCapacity() { return capacity - attendees.size(); }
 
-    protected Attendee findAttendeeByName(String attendeeName) {
-        Attendee attendee = attendees.getFirst();
-        ListIterator<Attendee> attendeesIterator = attendees.listIterator(0);
-
-        while (attendee != null) {
-            if (attendee.getName() == attendeeName) return attendee;
-
-            attendee = attendeesIterator.next();
-        }
-
-        return attendee;
-    }
-
+    // Aceita qualquer participante por padrão
     protected boolean acceptsAttendee(Attendee attendee) { return true; }
+
+    protected String getEventType() { return "Evento"; };
 }
