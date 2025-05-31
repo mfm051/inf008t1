@@ -4,7 +4,7 @@ public class Attendee {
     public Attendee(String name) {
         this.name = name;
     }
-    
+
     public void attendEvent(Event event) {
         try {
             event.addAttendee(this);

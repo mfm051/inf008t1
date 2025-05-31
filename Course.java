@@ -1,9 +1,9 @@
 import java.util.Date;
 
 public class Course extends Event {
-    public Course(String title, Date date, String location, int capacity, String description)
+    public Course(String title, Date date, String location, int capacity, String description, int durationInMin)
     {
-        super(title, date, location, capacity, description, description, capacity);
+        super(title, date, location, capacity, description, durationInMin);
     }
 
     // Os cursos se distinguem dos demais eventos por restringirem a participação a alunos
@@ -12,11 +12,8 @@ public class Course extends Event {
         return attendee instanceof Student;
     }
 
-    @Override
-    protected String getEventType() { return "Curso"; };
-
     public static void main(String[] args) {
-        Course c = new Course("a", new Date(), "ssa", 20, "legal");
+        Course c = new Course("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 65);
         Student a = new Student("teste");
 
         try {

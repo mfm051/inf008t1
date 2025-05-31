@@ -1,6 +1,5 @@
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 abstract class Event {
     private String title;
@@ -9,18 +8,17 @@ abstract class Event {
     private int capacity;
     private String description;
     private LinkedList<Attendee> attendees;
-    private String theme;
     private int durationInMin;
 
-    public Event(String title, Date date, String location, int capacity, String description, String theme, int durationInMin) {
+
+    public Event(String title, Date date, String location, int capacity, String description, int durationInMin) {
         this.title = title;
         this.date = date;
         this.location = location;
         this.capacity = capacity;
         this.description = description;
-        attendees = new LinkedList<Attendee>();
-        this.theme = theme;
         this.durationInMin = durationInMin;
+        attendees = new LinkedList<Attendee>();
     }
 
     public void addAttendee(Attendee attendee) throws Exception {
@@ -38,13 +36,32 @@ abstract class Event {
             throw new Exception("Participante não cadastrado no evento");
 
         return "Informamos que o participante " + attendee.getName() + 
-                " participou do " + getEventType() + " " + title + " em " + date.toString();
+                " participou de " +  title + 
+                " com uma carga horária de " + 
+                getEventWorkload() +
+                " realizado em " + location + 
+                " na data " + date.toString();
     }
 
-    protected int remainingCapacity() { return capacity - attendees.size(); }
-
-    // Aceita qualquer participante por padrão
+    // "Evento" aceita qualquer participante por padrão
+    // Caso necessário, modificar nos eventos específicos
     protected boolean acceptsAttendee(Attendee attendee) { return true; }
 
-    protected String getEventType() { return "Evento"; };
+    private String getEventWorkload() {
+        int hours = durationInMin / 60;
+        int mins = durationInMin % 60;
+
+        System.out.println(durationInMin);
+
+        String workload = "";
+
+        if (hours > 0)
+            workload += hours + "h";
+        if (mins > 0)
+            workload += mins + "m";
+
+        return workload;
+    }
+
+    private int remainingCapacity() { return capacity - attendees.size(); }
 }
