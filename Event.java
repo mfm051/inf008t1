@@ -35,7 +35,7 @@ abstract class Event {
         if (!attendees.contains(attendee))
             throw new Exception("Participante não cadastrado no evento");
 
-        return "Informamos que o participante " + attendee.getName() + 
+        return "Informamos que o participante " + attendee.getAttendeeDetails() + 
                 " participou de " +  title + 
                 " com uma carga horária de " + 
                 getEventWorkload() +
@@ -50,8 +50,6 @@ abstract class Event {
     private String getEventWorkload() {
         int hours = durationInMin / 60;
         int mins = durationInMin % 60;
-
-        System.out.println(durationInMin);
 
         String workload = "";
 

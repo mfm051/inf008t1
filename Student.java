@@ -1,5 +1,13 @@
-public class Student extends Attendee {
-    public Student(String name) {
-        super(name);
+public class Student implements Attendee {
+    String name;
+    int studentId;
+
+    public Student(String name, int studentId) {
+        this.name = name;
+        this.studentId = studentId;
+    }
+
+    public String getAttendeeDetails() {
+        return "estudante" + " " + name + " " + "matrícula" + " " + studentId;
     }
 }
