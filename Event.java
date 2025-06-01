@@ -8,16 +8,14 @@ abstract class Event {
     private int capacity;
     private String description;
     private HashSet<Attendee> attendees;
-    private int lengthInMin;
 
 
-    public Event(String title, Date date, String location, int capacity, String description, int lengthInMin) {
+    public Event(String title, Date date, String location, int capacity, String description) {
         this.title = title;
         this.date = date;
         this.location = location;
         this.capacity = capacity;
         this.description = description;
-        this.lengthInMin = lengthInMin;
         attendees = new HashSet<Attendee>();
     }
 
@@ -38,18 +36,26 @@ abstract class Event {
         return "Informamos que o participante " + attendee.getAttendeeDetails() + 
                 " participou de " +  title + 
                 " com uma carga horária de " + 
-                getEventWorkload() +
+                workloadToHumans(getAttendeeWorkloadInMinutes(attendee)) +
                 " realizado em " + location + 
                 " na data " + date.toString();
     }
+
+    public HashSet<Attendee> getAttendees() { return attendees; };
+
+    // O cálculo da carga horária do participante depende da quantidade de atividades do evento,
+    // bem como da participação ou não em determinadas atividades
+    protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
+
+    protected abstract int getEventWorkloadInMinutes();
 
     // "Evento" aceita qualquer participante por padrão
     // Caso necessário, modificar nos eventos específicos
     protected boolean acceptsAttendee(Attendee attendee) { return true; }
 
-    private String getEventWorkload() {
-        int hours = lengthInMin / 60;
-        int mins = lengthInMin % 60;
+    protected String workloadToHumans(int workloadInMinutes) {
+        int hours = workloadInMinutes / 60;
+        int mins = workloadInMinutes % 60;
 
         String workload = "";
 

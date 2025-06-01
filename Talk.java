@@ -1,0 +1,25 @@
+import java.util.Date;
+
+public class Talk extends Event {
+    // Um palestrante pode ser qualquer participante do evento
+    private Attendee speaker;
+
+    private int lengthInMinutes;
+
+    public Talk(String title, Date date, String location, int capacity, String description, int lengthInMinutes, Attendee speaker) {
+        super(title, date, location, capacity, description);
+
+        this.lengthInMinutes = lengthInMinutes;
+        this.speaker = speaker;
+    }
+
+    @Override
+    protected int getAttendeeWorkloadInMinutes(Attendee attendee) { 
+        return getEventWorkloadInMinutes();
+    };
+
+    @Override 
+    protected int getEventWorkloadInMinutes() { 
+        return lengthInMinutes; 
+    };
+}
