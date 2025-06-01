@@ -8,16 +8,16 @@ abstract class Event {
     private int capacity;
     private String description;
     private LinkedList<Attendee> attendees;
-    private int durationInMin;
+    private int lengthInMin;
 
 
-    public Event(String title, Date date, String location, int capacity, String description, int durationInMin) {
+    public Event(String title, Date date, String location, int capacity, String description, int lengthInMin) {
         this.title = title;
         this.date = date;
         this.location = location;
         this.capacity = capacity;
         this.description = description;
-        this.durationInMin = durationInMin;
+        this.lengthInMin = lengthInMin;
         attendees = new LinkedList<Attendee>();
     }
 
@@ -48,8 +48,8 @@ abstract class Event {
     protected boolean acceptsAttendee(Attendee attendee) { return true; }
 
     private String getEventWorkload() {
-        int hours = durationInMin / 60;
-        int mins = durationInMin % 60;
+        int hours = lengthInMin / 60;
+        int mins = lengthInMin % 60;
 
         String workload = "";
 
