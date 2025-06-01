@@ -43,10 +43,10 @@ abstract class Event {
 
     public HashSet<Attendee> getAttendees() { return attendees; };
 
-    // O cálculo da carga horária do participante depende da quantidade de atividades do evento,
-    // bem como da participação ou não em determinadas atividades
+    // O cálculo da carga horária do participante pode ou não ser igual ao do evento
+    // dependendo da quantidade de atividades do evento,
+    // bem como da sua participação ou não em determinadas atividades
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
-
     protected abstract int getEventWorkloadInMinutes();
 
     // "Evento" aceita qualquer participante por padrão
