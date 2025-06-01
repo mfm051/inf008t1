@@ -25,18 +25,4 @@ public class Workshop extends Event {
     protected int getEventWorkloadInMinutes() {
         return lengthInMinutes;
     }
-
-    public static void main(String[] args) {
-        Attendee p = new Student("Vandro", 1);
-        Workshop c = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
-        Student a = new Student("teste", 1);
-
-        try {
-            c.addAttendee(a);
-            System.out.println(c.getAttendeeCertificate(a));
-        }
-        catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 }
