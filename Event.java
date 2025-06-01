@@ -1,5 +1,5 @@
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.HashSet;
 
 abstract class Event {
     private String title;
@@ -7,7 +7,7 @@ abstract class Event {
     private String location;
     private int capacity;
     private String description;
-    private LinkedList<Attendee> attendees;
+    private HashSet<Attendee> attendees;
     private int lengthInMin;
 
 
@@ -18,7 +18,7 @@ abstract class Event {
         this.capacity = capacity;
         this.description = description;
         this.lengthInMin = lengthInMin;
-        attendees = new LinkedList<Attendee>();
+        attendees = new HashSet<Attendee>();
     }
 
     public void addAttendee(Attendee attendee) throws Exception {
