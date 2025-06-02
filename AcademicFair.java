@@ -13,8 +13,19 @@ public class AcademicFair extends Event {
     {
         super(title, date, location, capacity, description);
 
+        talks = new HashSet<Talk>();
+        workshops = new HashSet<Workshop>();
+
         attendeesTalks = new HashMap<Attendee, HashSet<Talk>>();
         attendeesWorkShops = new HashMap<Attendee, HashSet<Workshop>>();
+    }
+
+    @Override
+    public void addAttendee(Attendee attendee) throws Exception {
+        super.addAttendee(attendee);
+        // A adição do participante deve garantir que ele possa ser registrado em atividades
+        attendeesTalks.putIfAbsent(attendee, new HashSet<Talk>());
+        attendeesWorkShops.putIfAbsent(attendee, new HashSet<Workshop>());
     }
 
     public void addTalk(Talk talk) {
@@ -26,20 +37,20 @@ public class AcademicFair extends Event {
     }
 
     public void registerAttendeeInEvent(Attendee attendee, Event event) throws Exception {
-        // Garante que exista um espaço para adição de eventos do participante
-        initializeAttendeeEvents(attendee);
-
-        if (event instanceof Talk) {
+        if (!getAttendees().contains(attendee))
+            throw new Exception("Participante não registrado na Feira");
+            
+        if (event instanceof Talk && talks.contains(event)) {
             attendeesTalks.get(attendee).add((Talk)event);
             return;
         }
 
-        if (event instanceof Workshop) {
+        if (event instanceof Workshop && workshops.contains(event)) {
             attendeesWorkShops.get(attendee).add((Workshop)event);
             return;
         }
 
-        throw new Exception("Evento não cadastrado no Workshop");
+        throw new Exception("Evento não cadastrado na feira");
     }
 
     @Override
@@ -75,15 +86,6 @@ public class AcademicFair extends Event {
         return total;
     }
 
-    private void initializeAttendeeEvents(Attendee attendee) throws Exception {
-        if (!getAttendees().contains(attendee)) {
-            addAttendee(attendee);
-        }
-
-        attendeesTalks.putIfAbsent(attendee, new HashSet<Talk>());
-        attendeesWorkShops.putIfAbsent(attendee, new HashSet<Workshop>());
-    }
-
     public static void main(String[] args) {
         Professor p = new Professor("Vandro", 1);
         Workshop w = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
@@ -93,6 +95,10 @@ public class AcademicFair extends Event {
         AcademicFair af = new AcademicFair("Feira de linguadens", new Date(), "Salvador, BA", 20, "Feira de linguagens de programação");
 
         try {
+            af.addAttendee(a);
+            af.addTalk(t);
+            af.addWorkshop(w);
+
             af.registerAttendeeInEvent(a, t);
             af.registerAttendeeInEvent(a, w);
             System.out.println(af.getAttendeeCertificate(a));
