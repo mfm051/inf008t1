@@ -7,7 +7,8 @@ public class Professor implements Attendee {
         this.professorId = professorId;
     }
 
-    public String getAttendeeDetails() {
+    @Override
+    public String getFullInfo() {
         return "professor" + " " + name + " " + "matrícula" + " " + professorId;
     }
 }

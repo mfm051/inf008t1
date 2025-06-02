@@ -7,7 +7,8 @@ public class Student implements Attendee {
         this.studentId = studentId;
     }
 
-    public String getAttendeeDetails() {
+    @Override
+    public String getFullInfo() {
         return "estudante" + " " + name + " " + "matrícula" + " " + studentId;
     }
 }

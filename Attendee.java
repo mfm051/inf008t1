@@ -1,3 +1,3 @@
 public interface Attendee {
-    public String getAttendeeDetails();
+    public String getFullInfo();
 }
