@@ -36,24 +36,22 @@ abstract class Event {
         return "Informamos que o participante " + attendee.getAttendeeDetails() + 
                 " participou de " +  title + 
                 " com uma carga horária de " + 
-                workloadToHumans(getAttendeeWorkloadInMinutes(attendee)) +
+                getReadableWorkload(attendee) +
                 " realizado em " + location + 
                 " na data " + date.toString();
     }
 
     public HashSet<Attendee> getAttendees() { return attendees; };
 
-    // O cálculo da carga horária do participante pode ou não ser igual ao do evento
-    // dependendo da quantidade de atividades do evento,
-    // bem como da sua participação ou não em determinadas atividades
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
-    protected abstract int getEventWorkloadInMinutes();
 
     // "Evento" aceita qualquer participante por padrão
     // Caso necessário, modificar nos eventos específicos
     protected boolean acceptsAttendee(Attendee attendee) { return true; }
 
-    protected String workloadToHumans(int workloadInMinutes) {
+    private String getReadableWorkload(Attendee attendee) {
+        int workloadInMinutes = getAttendeeWorkloadInMinutes(attendee);
+
         int hours = workloadInMinutes / 60;
         int mins = workloadInMinutes % 60;
 

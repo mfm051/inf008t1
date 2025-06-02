@@ -47,17 +47,6 @@ public class AcademicFair extends Event {
         return totalMinAttendee;
     }
 
-    @Override
-    protected int getEventWorkloadInMinutes() {
-        int total = 0;
-
-        for (Event activity : getActivities()) {
-            total += activity.getEventWorkloadInMinutes();
-        }
-
-        return total;
-    }
-
     private Set<Event> getActivities() { return attendeesPerActivity.keySet(); };
 
     public static void main(String[] args) {

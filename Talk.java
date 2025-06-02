@@ -15,11 +15,6 @@ public class Talk extends Event {
 
     @Override
     protected int getAttendeeWorkloadInMinutes(Attendee attendee) { 
-        return getEventWorkloadInMinutes();
-    };
-
-    @Override 
-    protected int getEventWorkloadInMinutes() { 
-        return lengthInMinutes; 
+        return lengthInMinutes;
     };
 }

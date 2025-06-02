@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.ListIterator;
 
 public class Workshop extends Event {
     // Um workshop é um evento mais abrangente
@@ -18,11 +16,6 @@ public class Workshop extends Event {
 
     @Override
     protected int getAttendeeWorkloadInMinutes(Attendee attendee) {
-        return getEventWorkloadInMinutes();
-    }
-
-    @Override
-    protected int getEventWorkloadInMinutes() {
         return lengthInMinutes;
     }
 }
