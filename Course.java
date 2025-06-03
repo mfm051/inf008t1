@@ -12,10 +12,19 @@ public class Course extends Event {
         this.lengthInMinutes = lengthInMinutes;
     }
 
+    @Override
+    public String getAttendeeCertificate(Attendee attendee) {
+        if (!getAttendees().contains(attendee))
+            return "Participante não cadastrado no curso";
+
+        return "Informamos que " + attendee.getFullInfo() + " participou do curso " + getTitle() + 
+                " com carga horária de " + getReadableWorkload(attendee) + " em " + getReadableDate();
+    }
+
     // Os cursos se distinguem dos demais eventos por restringirem a participação como ouvinte a alunos
     @Override
     protected boolean acceptsAttendee(Attendee attendee) {
-        return attendee instanceof Student;
+        return attendee instanceof Student && getRemainingCapacity() > 0;
     }
 
     @Override

@@ -15,7 +15,21 @@ public class Workshop extends Event {
     }
 
     @Override
+    public String getAttendeeCertificate(Attendee attendee) {
+        if (!getAttendees().contains(attendee))
+            return "Participante não cadastrado no workshop";
+
+        return "Informamos que " + attendee.getFullInfo() + " participou do workshop " + getTitle() +
+                " com carga horária de " + getReadableWorkload(attendee) + " em " + getReadableDate();
+    }
+
+    @Override
     protected int getAttendeeWorkloadInMinutes(Attendee attendee) {
         return lengthInMinutes;
+    }
+
+    @Override
+    protected boolean acceptsAttendee(Attendee attendee) { 
+        return getRemainingCapacity() > 0;
     }
 }
