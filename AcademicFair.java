@@ -34,6 +34,23 @@ public class AcademicFair extends Event {
     }
 
     @Override
+    public String getAttendeeCertificate(Attendee attendee) {
+        if (!getAttendees().contains(attendee))
+            return "Participante não cadastrado na feira acadêmica";
+
+        String basicMessage = "Informamos que o participante " + attendee.getFullInfo() + " participou da feira " + getTitle() +
+                                " com uma carga horária total de " + getReadableWorkload(attendee);
+        
+        String activitiesDetails = "Relatório das atividades:\n";
+        for (Event activity : getAtendeeActivities(attendee)) {
+            activitiesDetails += activity.getTitle() + ": " + activity.getReadableDate() + " (" + activity.getReadableWorkload(attendee) + ")";
+            activitiesDetails += "\n";
+        }
+
+        return basicMessage + "\n" + activitiesDetails + "\n";
+    }
+
+    @Override
     protected int getAttendeeWorkloadInMinutes(Attendee attendee) {
         int totalMinAttendee = 0;
 
@@ -47,15 +64,33 @@ public class AcademicFair extends Event {
         return totalMinAttendee;
     }
 
+    @Override
+    protected boolean acceptsAttendee(Attendee attendee) {
+        return getRemainingCapacity() > 0;
+    }
+
     private Set<Event> getActivities() { return attendeesPerActivity.keySet(); };
+
+    private Set<Event> getAtendeeActivities(Attendee attendee) {
+        HashSet<Event> activities = new HashSet<Event>();
+
+        for (Event activity : getActivities()) {
+            HashSet<Attendee> attendees = attendeesPerActivity.get(activity);
+
+            if (attendees.contains(attendee))
+                activities.add(activity);
+        }
+
+        return activities;
+    }
 
     public static void main(String[] args) {
         Professor p = new Professor("Vandro", 1);
         Workshop w = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
-        Talk t = new Talk("Java é mó legal", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
+        Talk t = new Talk("Java vs C#", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
         Attendee a = new Student("teste", 1);
 
-        AcademicFair af = new AcademicFair("Feira de linguadens", new Date(), "Salvador, BA", 20, "Feira de linguagens de programação");
+        AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20, "Feira de linguagens de programação");
 
         try {
             af.addAttendee(a);

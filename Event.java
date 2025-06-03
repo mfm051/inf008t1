@@ -19,37 +19,26 @@ abstract class Event {
         attendees = new HashSet<Attendee>();
     }
 
-    public void addAttendee(Attendee attendee) throws Exception {
-        if (remainingCapacity() <= 0)
-            throw new Exception("Evento lotado");
+    public String getTitle() { return title; };
+    public String getReadableDate() { return date.toString(); };
+    public HashSet<Attendee> getAttendees() { return attendees; };
 
+    public void addAttendee(Attendee attendee) throws Exception {
         if (!acceptsAttendee(attendee))
             throw new Exception("Participante não permitido no evento");
 
         attendees.add(attendee);
     }
 
-    public String getAttendeeCertificate(Attendee attendee) throws Exception {
-        if (!attendees.contains(attendee))
-            throw new Exception("Participante não cadastrado no evento");
+    public abstract String getAttendeeCertificate(Attendee attendee);
 
-        return "Informamos que o participante " + attendee.getAttendeeDetails() + 
-                " participou de " +  title + 
-                " com uma carga horária de " + 
-                getReadableWorkload(attendee) +
-                " realizado em " + location + 
-                " na data " + date.toString();
-    }
-
-    public HashSet<Attendee> getAttendees() { return attendees; };
+    protected int getRemainingCapacity() { return capacity - attendees.size(); }
 
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
 
-    // "Evento" aceita qualquer participante por padrão
-    // Caso necessário, modificar nos eventos específicos
-    protected boolean acceptsAttendee(Attendee attendee) { return true; }
+    protected abstract boolean acceptsAttendee(Attendee attendee);
 
-    private String getReadableWorkload(Attendee attendee) {
+    protected String getReadableWorkload(Attendee attendee) {
         int workloadInMinutes = getAttendeeWorkloadInMinutes(attendee);
 
         int hours = workloadInMinutes / 60;
@@ -64,6 +53,4 @@ abstract class Event {
 
         return workload;
     }
-
-    private int remainingCapacity() { return capacity - attendees.size(); }
 }
