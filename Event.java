@@ -9,7 +9,6 @@ abstract class Event {
     private String description;
     private HashSet<Attendee> attendees;
 
-
     public Event(String title, Date date, String location, int capacity, String description) {
         this.title = title;
         this.date = date;
@@ -19,9 +18,19 @@ abstract class Event {
         attendees = new HashSet<Attendee>();
     }
 
-    public String getTitle() { return title; };
-    public String getReadableDate() { return date.toString(); };
-    public HashSet<Attendee> getAttendees() { return attendees; };
+    public String getTitle() {
+        return title;
+    };
+
+    public String getReadableDate() {
+        return date.toString();
+    };
+
+    public HashSet<Attendee> getAttendees() {
+        return attendees;
+    };
+
+    public abstract String getAttendeeCertificate(Attendee attendee);
 
     public void addAttendee(Attendee attendee) throws Exception {
         if (!acceptsAttendee(attendee))
@@ -30,13 +39,13 @@ abstract class Event {
         attendees.add(attendee);
     }
 
-    public abstract String getAttendeeCertificate(Attendee attendee);
-
-    protected int getRemainingCapacity() { return capacity - attendees.size(); }
-
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
 
     protected abstract boolean acceptsAttendee(Attendee attendee);
+
+    protected int getRemainingCapacity() {
+        return capacity - attendees.size();
+    }
 
     protected String getReadableWorkload(Attendee attendee) {
         int workloadInMinutes = getAttendeeWorkloadInMinutes(attendee);
