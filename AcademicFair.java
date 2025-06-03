@@ -8,18 +8,18 @@ public class AcademicFair extends Event {
     // que podem ser vistas como eventos internos da feira
     private HashMap<Event, HashSet<Attendee>> attendeesPerActivity;
 
-    public AcademicFair(String title, Date date, String location, int capacity, String description) {
+    public AcademicFair(String title, Date date, String location, int capacity, String description,
+            HashSet<Event> activities) {
         super(title, date, location, capacity, description);
 
         attendeesPerActivity = new HashMap<Event, HashSet<Attendee>>();
-    }
-
-    public void addActivity(Event activity) throws Exception {
-        if (activity instanceof AcademicFair)
-            throw new Exception("É uma feira recursiva?");
-
-        // A atividade deve ser criada e permitir a adição de participantes a ela
-        attendeesPerActivity.put(activity, new HashSet<Attendee>());
+        try {
+            setActivities(activities);
+        }
+        catch (Exception e) {
+            System.out.println("Não foi possível cadastrar feira");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void registerAttendeeInActivity(Attendee attendee, Event activity) throws Exception {
@@ -37,18 +37,17 @@ public class AcademicFair extends Event {
         if (!getAttendees().contains(attendee))
             return "Participante não cadastrado na feira acadêmica";
 
-        String basicMessage = "Informamos que o participante " + attendee.getFullInfo() + " participou da feira "
-                + getTitle() +
-                " com uma carga horária total de " + getReadableWorkload(attendee);
+        String basicMessage = super.getAttendeeCertificate(attendee);
 
-        String activitiesDetails = "Relatório das atividades:\n";
+        String activitiesDetailsMessage = "Relatório das atividades:\n";
+
         for (Event activity : getAtendeeActivities(attendee)) {
-            activitiesDetails += activity.getTitle() + ": " + activity.getReadableDate() + " ("
+            activitiesDetailsMessage += activity.getTitle() + ": " + activity.getReadableDate() + " ("
                     + activity.getReadableWorkload(attendee) + ")";
-            activitiesDetails += "\n";
+            activitiesDetailsMessage += "\n";
         }
 
-        return basicMessage + "\n" + activitiesDetails + "\n";
+        return basicMessage + "\n" + activitiesDetailsMessage;
     }
 
     @Override
@@ -70,10 +69,6 @@ public class AcademicFair extends Event {
         return getRemainingCapacity() > 0;
     }
 
-    private Set<Event> getActivities() {
-        return attendeesPerActivity.keySet();
-    };
-
     private Set<Event> getAtendeeActivities(Attendee attendee) {
         HashSet<Event> activities = new HashSet<Event>();
 
@@ -87,22 +82,41 @@ public class AcademicFair extends Event {
         return activities;
     }
 
+    private Set<Event> getActivities() {
+        return attendeesPerActivity.keySet();
+    };
+
+    private void setActivities(HashSet<Event> activities) throws Exception {
+        if (activities == null || activities.size() == 0)
+            throw new Exception("A feira deve conter ao menos uma atividade registrada");
+
+        for (Event activity : activities) {
+            if (activity instanceof AcademicFair)
+                throw new Exception("Uma feira acadêmica não pode conter outra feira");
+
+            attendeesPerActivity.put(activity, new HashSet<Attendee>());
+        }
+    }
+
     public static void main(String[] args) {
         Professor p = new Professor("Vandro", 1);
-        Workshop w = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
-        Talk t = new Talk("Java vs C#", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
         Attendee a = new Student("teste", 1);
 
+        Workshop w = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
+        Talk t = new Talk("Java vs C#", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
+        HashSet<Event> activities = new HashSet<Event>();
+        activities.add(w);
+        activities.add(t);
+
         AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
-                "Feira de linguagens de programação");
+                "Feira de linguagens de programação", activities);
 
         try {
             af.addAttendee(a);
-            af.addActivity(t);
-            af.addActivity(w);
 
             af.registerAttendeeInActivity(a, t);
             af.registerAttendeeInActivity(a, w);
+
             System.out.println(af.getAttendeeCertificate(a));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

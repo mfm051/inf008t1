@@ -30,7 +30,13 @@ abstract class Event {
         return attendees;
     };
 
-    public abstract String getAttendeeCertificate(Attendee attendee);
+    public String getAttendeeCertificate(Attendee attendee) {
+        if (!getAttendees().contains(attendee))
+            return "Participante não cadastrado no curso";
+
+        return "Informamos que o participante " + attendee.getFullInfo() + " participou do evento "
+                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
+    }
 
     public void addAttendee(Attendee attendee) throws Exception {
         if (!acceptsAttendee(attendee))
