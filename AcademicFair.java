@@ -8,10 +8,9 @@ public class AcademicFair extends Event {
     // que podem ser vistas como eventos internos da feira
     private HashMap<Event, HashSet<Attendee>> attendeesPerActivity;
 
-    public AcademicFair(String title, Date date, String location, int capacity, String description)
-    {
+    public AcademicFair(String title, Date date, String location, int capacity, String description) {
         super(title, date, location, capacity, description);
-        
+
         attendeesPerActivity = new HashMap<Event, HashSet<Attendee>>();
     }
 
@@ -29,7 +28,7 @@ public class AcademicFair extends Event {
 
         if (!getActivities().contains(activity))
             throw new Exception("Atividade não cadastrada na feira");
-            
+
         attendeesPerActivity.get(activity).add(attendee);
     }
 
@@ -38,12 +37,14 @@ public class AcademicFair extends Event {
         if (!getAttendees().contains(attendee))
             return "Participante não cadastrado na feira acadêmica";
 
-        String basicMessage = "Informamos que o participante " + attendee.getFullInfo() + " participou da feira " + getTitle() +
-                                " com uma carga horária total de " + getReadableWorkload(attendee);
-        
+        String basicMessage = "Informamos que o participante " + attendee.getFullInfo() + " participou da feira "
+                + getTitle() +
+                " com uma carga horária total de " + getReadableWorkload(attendee);
+
         String activitiesDetails = "Relatório das atividades:\n";
         for (Event activity : getAtendeeActivities(attendee)) {
-            activitiesDetails += activity.getTitle() + ": " + activity.getReadableDate() + " (" + activity.getReadableWorkload(attendee) + ")";
+            activitiesDetails += activity.getTitle() + ": " + activity.getReadableDate() + " ("
+                    + activity.getReadableWorkload(attendee) + ")";
             activitiesDetails += "\n";
         }
 
@@ -69,7 +70,9 @@ public class AcademicFair extends Event {
         return getRemainingCapacity() > 0;
     }
 
-    private Set<Event> getActivities() { return attendeesPerActivity.keySet(); };
+    private Set<Event> getActivities() {
+        return attendeesPerActivity.keySet();
+    };
 
     private Set<Event> getAtendeeActivities(Attendee attendee) {
         HashSet<Event> activities = new HashSet<Event>();
@@ -90,7 +93,8 @@ public class AcademicFair extends Event {
         Talk t = new Talk("Java vs C#", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
         Attendee a = new Student("teste", 1);
 
-        AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20, "Feira de linguagens de programação");
+        AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
+                "Feira de linguagens de programação");
 
         try {
             af.addAttendee(a);
@@ -100,8 +104,7 @@ public class AcademicFair extends Event {
             af.registerAttendeeInActivity(a, t);
             af.registerAttendeeInActivity(a, w);
             System.out.println(af.getAttendeeCertificate(a));
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }

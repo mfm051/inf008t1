@@ -7,7 +7,8 @@ public class Workshop extends Event {
 
     int lengthInMinutes;
 
-    public Workshop(String title, Date date, String location, int capacity, String description, int lengthInMinutes, Attendee instructor) {
+    public Workshop(String title, Date date, String location, int capacity, String description, int lengthInMinutes,
+            Attendee instructor) {
         super(title, date, location, capacity, description);
 
         this.lengthInMinutes = lengthInMinutes;
@@ -29,7 +30,7 @@ public class Workshop extends Event {
     }
 
     @Override
-    protected boolean acceptsAttendee(Attendee attendee) { 
+    protected boolean acceptsAttendee(Attendee attendee) {
         return getRemainingCapacity() > 0;
     }
 }

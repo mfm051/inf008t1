@@ -6,7 +6,8 @@ public class Talk extends Event {
 
     private int lengthInMinutes;
 
-    public Talk(String title, Date date, String location, int capacity, String description, int lengthInMinutes, Attendee speaker) {
+    public Talk(String title, Date date, String location, int capacity, String description, int lengthInMinutes,
+            Attendee speaker) {
         super(title, date, location, capacity, description);
 
         this.lengthInMinutes = lengthInMinutes;
@@ -23,7 +24,7 @@ public class Talk extends Event {
     }
 
     @Override
-    protected int getAttendeeWorkloadInMinutes(Attendee attendee) { 
+    protected int getAttendeeWorkloadInMinutes(Attendee attendee) {
         return lengthInMinutes;
     };
 
