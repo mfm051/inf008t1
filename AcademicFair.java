@@ -9,7 +9,7 @@ public class AcademicFair extends Event {
     private HashMap<Event, HashSet<Attendee>> attendeesPerActivity;
 
     public AcademicFair(String title, Date date, String location, int capacity, String description,
-            HashSet<Event> activities) {
+            HashSet<Event> activities) throws Exception {
         super(title, date, location, capacity, description);
 
         attendeesPerActivity = new HashMap<Event, HashSet<Attendee>>();
@@ -17,8 +17,8 @@ public class AcademicFair extends Event {
             setActivities(activities);
         }
         catch (Exception e) {
-            System.out.println("Não foi possível cadastrar feira");
             System.out.println(e.getMessage());
+            throw new Exception("Não foi possível cadastrar feira");
         }
     }
 
@@ -69,6 +69,10 @@ public class AcademicFair extends Event {
         return getRemainingCapacity() > 0;
     }
 
+    private Set<Event> getActivities() {
+        return attendeesPerActivity.keySet();
+    };
+
     private Set<Event> getAtendeeActivities(Attendee attendee) {
         HashSet<Event> activities = new HashSet<Event>();
 
@@ -81,10 +85,6 @@ public class AcademicFair extends Event {
 
         return activities;
     }
-
-    private Set<Event> getActivities() {
-        return attendeesPerActivity.keySet();
-    };
 
     private void setActivities(HashSet<Event> activities) throws Exception {
         if (activities == null || activities.size() == 0)
@@ -108,10 +108,9 @@ public class AcademicFair extends Event {
         activities.add(w);
         activities.add(t);
 
-        AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
-                "Feira de linguagens de programação", activities);
-
         try {
+            AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
+                "Feira de linguagens de programação", activities);
             af.addAttendee(a);
 
             af.registerAttendeeInActivity(a, t);
