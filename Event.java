@@ -26,6 +26,10 @@ abstract class Event {
         return date.toString();
     };
 
+    public String getLocation() {
+        return location;
+    }
+
     public HashSet<Attendee> getAttendees() {
         return attendees;
     };
@@ -37,21 +41,15 @@ abstract class Event {
         attendees.add(attendee);
     }
 
-    public String getAttendeeCertificate(Attendee attendee) {
-        if (isPresenter(attendee))
-            return getPresenterCertificate(attendee);
-        
-        if (!getAttendees().contains(attendee))
-            return "Participante não cadastrado no curso";
-        else
-            return getParticipationCertificate(attendee);
+    public String getAttendeeCertificateMessage(Attendee attendee) {
+        return new EventCertificate(attendee, this).getMessage();
     }
 
-    protected abstract boolean isPresenter(Attendee attendee);
+    public boolean isAttendee(Attendee attendee) {
+        return attendees.contains(attendee);
+    }
 
-    protected abstract String getPresenterCertificate(Attendee attendee);
-
-    protected abstract String getParticipationCertificate(Attendee attendee);
+    public abstract boolean isPresenter(Attendee attendee);
 
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
 

@@ -15,19 +15,8 @@ public class Talk extends Event {
     }
 
     @Override
-    protected boolean isPresenter(Attendee attendee) {
+    public boolean isPresenter(Attendee attendee) {
         return attendee == speaker;
-    }
-
-    @Override
-    protected String getPresenterCertificate(Attendee attendee) {
-        return "Certificamos que " + attendee.getFullInfo() + " apresentou a palestra " + getTitle() + " em " + getReadableDate();
-    }
-
-    @Override
-    protected String getParticipationCertificate(Attendee attendee) {
-        return "Informamos que o participante " + attendee.getFullInfo() + " participou da palestra "
-                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
     }
 
     @Override

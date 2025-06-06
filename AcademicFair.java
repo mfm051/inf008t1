@@ -15,8 +15,7 @@ public class AcademicFair extends Event {
         attendeesPerActivity = new HashMap<Event, HashSet<Attendee>>();
         try {
             setActivities(activities);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("Não foi possível cadastrar feira");
         }
@@ -33,32 +32,26 @@ public class AcademicFair extends Event {
     }
 
     @Override
-    protected boolean isPresenter(Attendee attendee) {
-        return getPresenterActivity(attendee) != null;
-    }
+    public String getAttendeeCertificateMessage(Attendee attendee) {
+        String generalCertificateMessage = new EventCertificate(attendee, this).getMessage();
+        String activitiesDetailsMessage = "";
 
-    @Override
-    protected String getPresenterCertificate(Attendee attendee) {
-        Event presenterActivity = getPresenterActivity(attendee);
+        Set<Event> activities = getAtendeeActivities(attendee);
+        if (!activities.isEmpty()) {
+            activitiesDetailsMessage += "Relatório das atividades:\n";
 
-        return "Certificamos que " + attendee.getFullInfo() + " participou da feira " + getTitle() +
-                " como instrutor na atividade " + presenterActivity.getTitle() + " em " + presenterActivity.getReadableDate(); 
-    }
-
-    @Override
-    protected String getParticipationCertificate(Attendee attendee) {
-        String basicMessage =  "Informamos que o participante " + attendee.getFullInfo() + " participou da feira "
-                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
-
-        String activitiesDetailsMessage = "Relatório das atividades:\n";
-
-        for (Event activity : getAtendeeActivities(attendee)) {
-            activitiesDetailsMessage += activity.getTitle() + ": " + activity.getReadableDate() + " ("
-                    + activity.getReadableWorkload(attendee) + ")";
-            activitiesDetailsMessage += "\n";
+            for (Event activity : activities) {
+                activitiesDetailsMessage += new EventCertificate(attendee, activity).getShortDescription();
+                activitiesDetailsMessage += "\n";
+            }    
         }
 
-        return basicMessage + "\n" + activitiesDetailsMessage;
+        return generalCertificateMessage + "\n" + activitiesDetailsMessage;
+    }
+
+    @Override
+    public boolean isPresenter(Attendee attendee) {
+        return getPresenterActivity(attendee) != null;
     }
 
     @Override
@@ -130,14 +123,14 @@ public class AcademicFair extends Event {
 
         try {
             AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
-                "Feira de linguagens de programação", activities);
+                    "Feira de linguagens de programação", activities);
             af.addAttendee(a);
 
             af.registerAttendeeInActivity(a, t);
             af.registerAttendeeInActivity(a, w);
 
-            System.out.println(af.getAttendeeCertificate(a));
-            System.out.println(af.getAttendeeCertificate(p));
+            System.out.println(af.getAttendeeCertificateMessage(a));
+            System.out.println(af.getAttendeeCertificateMessage(p));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
