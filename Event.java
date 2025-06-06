@@ -30,20 +30,28 @@ abstract class Event {
         return attendees;
     };
 
-    public String getAttendeeCertificate(Attendee attendee) {
-        if (!getAttendees().contains(attendee))
-            return "Participante não cadastrado no curso";
-
-        return "Informamos que o participante " + attendee.getFullInfo() + " participou do evento "
-                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
-    }
-
     public void addAttendee(Attendee attendee) throws Exception {
         if (!acceptsAttendee(attendee))
             throw new Exception("Participante não permitido no evento");
 
         attendees.add(attendee);
     }
+
+    public String getAttendeeCertificate(Attendee attendee) {
+        if (isPresenter(attendee))
+            return getPresenterCertificate(attendee);
+        
+        if (!getAttendees().contains(attendee))
+            return "Participante não cadastrado no curso";
+        else
+            return getParticipationCertificate(attendee);
+    }
+
+    protected abstract boolean isPresenter(Attendee attendee);
+
+    protected abstract String getPresenterCertificate(Attendee attendee);
+
+    protected abstract String getParticipationCertificate(Attendee attendee);
 
     protected abstract int getAttendeeWorkloadInMinutes(Attendee attendee);
 

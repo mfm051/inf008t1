@@ -33,11 +33,22 @@ public class AcademicFair extends Event {
     }
 
     @Override
-    public String getAttendeeCertificate(Attendee attendee) {
-        if (!getAttendees().contains(attendee))
-            return "Participante não cadastrado na feira acadêmica";
+    protected boolean isPresenter(Attendee attendee) {
+        return getPresenterActivity(attendee) != null;
+    }
 
-        String basicMessage = super.getAttendeeCertificate(attendee);
+    @Override
+    protected String getPresenterCertificate(Attendee attendee) {
+        Event presenterActivity = getPresenterActivity(attendee);
+
+        return "Certificamos que " + attendee.getFullInfo() + " participou da feira " + getTitle() +
+                " como instrutor na atividade " + presenterActivity.getTitle() + " em " + presenterActivity.getReadableDate(); 
+    }
+
+    @Override
+    protected String getParticipationCertificate(Attendee attendee) {
+        String basicMessage =  "Informamos que o participante " + attendee.getFullInfo() + " participou da feira "
+                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
 
         String activitiesDetailsMessage = "Relatório das atividades:\n";
 
@@ -86,6 +97,15 @@ public class AcademicFair extends Event {
         return activities;
     }
 
+    private Event getPresenterActivity(Attendee attendee) {
+        for (Event activity : getActivities()) {
+            if (activity.isPresenter(attendee))
+                return activity;
+        }
+
+        return null;
+    }
+
     private void setActivities(HashSet<Event> activities) throws Exception {
         if (activities == null || activities.size() == 0)
             throw new Exception("A feira deve conter ao menos uma atividade registrada");
@@ -117,6 +137,7 @@ public class AcademicFair extends Event {
             af.registerAttendeeInActivity(a, w);
 
             System.out.println(af.getAttendeeCertificate(a));
+            System.out.println(af.getAttendeeCertificate(p));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

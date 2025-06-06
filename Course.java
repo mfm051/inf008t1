@@ -12,6 +12,22 @@ public class Course extends Event {
         this.lengthInMinutes = lengthInMinutes;
     }
 
+    @Override
+    protected boolean isPresenter(Attendee attendee) {
+        return attendee == lecturer;
+    }
+
+    @Override
+    protected String getPresenterCertificate(Attendee attendee) {
+        return "Certificamos que " + attendee.getFullInfo() + " apresentou o curso " + getTitle() + " em " + getReadableDate();
+    }
+
+    @Override
+    protected String getParticipationCertificate(Attendee attendee) {
+        return "Informamos que o participante " + attendee.getFullInfo() + " participou do curso "
+                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
+    }
+
     // Os cursos se distinguem dos demais eventos por restringirem a participação
     // como ouvinte a alunos
     @Override

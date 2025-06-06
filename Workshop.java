@@ -16,6 +16,22 @@ public class Workshop extends Event {
     }
 
     @Override
+    protected boolean isPresenter(Attendee attendee) {
+        return attendee == instructor;
+    }
+
+    @Override
+    protected String getPresenterCertificate(Attendee attendee) {
+        return "Certificamos que " + attendee.getFullInfo() + " foi instrutor no workshop " + getTitle() + " em " + getReadableDate();
+    }
+
+    @Override
+    protected String getParticipationCertificate(Attendee attendee) {
+        return "Informamos que o participante " + attendee.getFullInfo() + " participou do workshop "
+                + getTitle() + " com uma carga horária total de " + getReadableWorkload(attendee);
+    }
+
+    @Override
     protected int getAttendeeWorkloadInMinutes(Attendee attendee) {
         return lengthInMinutes;
     }
