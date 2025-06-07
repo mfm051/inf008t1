@@ -1,3 +1,7 @@
+package events;
+
+import attendees.Attendee;
+
 public class EventCertificate {
     private Attendee attendee;
     private Event event;

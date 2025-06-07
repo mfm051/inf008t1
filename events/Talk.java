@@ -1,4 +1,8 @@
+package events;
+
 import java.util.Date;
+
+import attendees.Attendee;
 
 public class Talk extends Event {
     // Um palestrante pode ser qualquer participante do evento

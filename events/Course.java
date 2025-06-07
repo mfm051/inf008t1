@@ -1,4 +1,10 @@
+package events;
+
 import java.util.Date;
+
+import attendees.Attendee;
+import attendees.Student;
+import attendees.Professor;
 
 public class Course extends Event {
     Professor lecturer;

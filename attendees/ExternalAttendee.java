@@ -1,3 +1,5 @@
+package attendees;
+
 public class ExternalAttendee implements Attendee {
     private String name;
     private int externalId;

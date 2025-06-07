@@ -1,3 +1,5 @@
+package attendees;
+
 public class Student implements Attendee {
     String name;
     int studentId;

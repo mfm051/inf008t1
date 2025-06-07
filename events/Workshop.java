@@ -1,4 +1,8 @@
+package events;
+
 import java.util.Date;
+
+import attendees.Attendee;
 
 public class Workshop extends Event {
     // Um workshop é um evento mais abrangente

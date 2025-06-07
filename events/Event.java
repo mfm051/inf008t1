@@ -1,5 +1,9 @@
+package events;
+
 import java.util.Date;
 import java.util.HashSet;
+
+import attendees.Attendee;
 
 abstract class Event {
     private String title;
