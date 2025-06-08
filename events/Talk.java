@@ -1,6 +1,6 @@
 package events;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import attendees.Attendee;
 
@@ -10,7 +10,7 @@ public class Talk extends Event {
 
     private int lengthInMinutes;
 
-    public Talk(String title, Date date, String location, int capacity, String description, int lengthInMinutes,
+    public Talk(String title, LocalDate date, String location, int capacity, String description, int lengthInMinutes,
             Attendee speaker) {
         super(title, date, location, capacity, description);
 

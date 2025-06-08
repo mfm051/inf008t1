@@ -1,19 +1,19 @@
 package events;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 
 import attendees.Attendee;
 
-abstract class Event {
+public abstract class Event {
     private String title;
-    private Date date;
+    private LocalDate date;
     private String location;
     private int capacity;
     private String description;
     private HashSet<Attendee> attendees;
 
-    public Event(String title, Date date, String location, int capacity, String description) {
+    public Event(String title, LocalDate date, String location, int capacity, String description) {
         this.title = title;
         this.date = date;
         this.location = location;

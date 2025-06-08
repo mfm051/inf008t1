@@ -1,18 +1,20 @@
 package events;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import attendees.Attendee;
+import attendees.Student;
+import attendees.Professor;
 
 public class AcademicFair extends Event {
     // Uma feira acadêmica é composta por diversas atividades
     // que podem ser vistas como eventos internos da feira
     private HashMap<Event, HashSet<Attendee>> attendeesPerActivity;
 
-    public AcademicFair(String title, Date date, String location, int capacity, String description,
+    public AcademicFair(String title, LocalDate date, String location, int capacity, String description,
             HashSet<Event> activities) throws Exception {
         super(title, date, location, capacity, description);
 
@@ -115,28 +117,28 @@ public class AcademicFair extends Event {
         }
     }
 
-    // public static void main(String[] args) {
-    //     Professor p = new Professor("Vandro", 1);
-    //     Attendee a = new Student("teste", 1);
+    public static void main(String[] args) {
+        Professor p = new Professor("Vandro", 1);
+        Attendee a = new Student("teste", 1);
 
-    //     Workshop w = new Workshop("Introdução ao java", new Date(), "Salvador, BA", 20, "legal", 200, p);
-    //     Talk t = new Talk("Java vs C#", new Date(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
-    //     HashSet<Event> activities = new HashSet<Event>();
-    //     activities.add(w);
-    //     activities.add(t);
+        Workshop w = new Workshop("Introdução ao java", LocalDate.now(), "Salvador, BA", 20, "legal", 200, p);
+        Talk t = new Talk("Java vs C#", LocalDate.now(), "Salvador, BA", 20, "Palestra sobre javinha", 50, p);
+        HashSet<Event> activities = new HashSet<Event>();
+        activities.add(w);
+        activities.add(t);
 
-    //     try {
-    //         AcademicFair af = new AcademicFair("Feira de linguagens", new Date(), "Salvador, BA", 20,
-    //                 "Feira de linguagens de programação", activities);
-    //         af.addAttendee(a);
+        try {
+            AcademicFair af = new AcademicFair("Feira de linguagens", LocalDate.now(), "Salvador, BA", 20,
+                    "Feira de linguagens de programação", activities);
+            af.addAttendee(a);
 
-    //         af.registerAttendeeInActivity(a, t);
-    //         af.registerAttendeeInActivity(a, w);
+            af.registerAttendeeInActivity(a, t);
+            af.registerAttendeeInActivity(a, w);
 
-    //         System.out.println(af.getAttendeeCertificateMessage(a));
-    //         System.out.println(af.getAttendeeCertificateMessage(p));
-    //     } catch (Exception ex) {
-    //         System.out.println(ex.getMessage());
-    //     }
-    // }
+            System.out.println(af.getAttendeeCertificateMessage(a));
+            System.out.println(af.getAttendeeCertificateMessage(p));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

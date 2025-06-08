@@ -1,6 +1,6 @@
 package events;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import attendees.Attendee;
 import attendees.Student;
@@ -10,7 +10,7 @@ public class Course extends Event {
     Professor lecturer;
     int lengthInMinutes;
 
-    public Course(String title, Date date, String location, int capacity, String description, Professor lecturer,
+    public Course(String title, LocalDate date, String location, int capacity, String description, Professor lecturer,
             int lengthInMinutes) {
         super(title, date, location, capacity, description);
 
