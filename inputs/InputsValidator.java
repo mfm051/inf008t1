@@ -1,10 +1,16 @@
+package inputs;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class InputsValidator {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final Scanner userInput = new Scanner(System.in);
 
-    public static String getNameFromInput(String name) throws Exception {
+    public static String getNameFromInput() throws Exception {
+        String name = userInput.nextLine();
+
         if (name.isEmpty()) {
             throw new Exception("Nome não pode ser vazio");
         }
@@ -13,7 +19,9 @@ public class InputsValidator {
         }
     }
 
-    public static LocalDate getDateFromInput(String dateStr) throws Exception {
+    public static LocalDate getDateFromInput() throws Exception {
+        String dateStr = userInput.nextLine();
+
         try {
             return LocalDate.parse(dateStr, DATE_FORMAT);
         }
@@ -22,7 +30,9 @@ public class InputsValidator {
         }
     }
 
-    public static int getIntFromInput(String intStr) throws Exception {
+    public static int getIntFromInput() throws Exception {
+        String intStr = userInput.nextLine();
+
         try {
             return Integer.parseInt(intStr);
         }
