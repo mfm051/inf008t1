@@ -12,27 +12,24 @@ public class EventCertificate {
     }
 
     public String getMessage() {
-        if (event.isAttendee(attendee))
-            return getParticipationMessage();
-
         if (event.isPresenter(attendee))
             return getPresenterMessage();
+
+        if (event.isAttendee(attendee))
+            return getParticipationMessage();
 
         return "Participante não registrado no evento";
     }
 
-    public String getShortDescription() {
-        return event.getTitle() + ": " + event.getReadableDate() + "(" + event.getReadableWorkload(attendee) + ")";
-    }
-
     private String getParticipationMessage() {
-        return "Certificamos que " + attendee.getFullInfo() + " participou do evento " + event.getTitle()
+        return "Certificamos a participação do(a) " + attendee.getFullInfo() + " no evento " + event.getTitle()
                 + " realizado em " + event.getLocation() + " em " + event.getReadableDate() +
                 " com uma carga horária de " + event.getReadableWorkload(attendee);
     }
 
     private String getPresenterMessage() {
-        return "Certificamos que " + attendee.getFullInfo() + " foi apresentador no evento " + event.getTitle()
-                + " realizado em " + event.getLocation() + " em " + event.getReadableDate();
+        return "Certificamos a participação do(a) " + attendee.getFullInfo() + " como apresentador no evento " + event.getTitle()
+                + " realizado em " + event.getLocation() + " em " + event.getReadableDate() +
+                " com uma carga horária de " + event.getReadableWorkload(attendee);
     }
 }
