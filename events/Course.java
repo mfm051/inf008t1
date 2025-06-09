@@ -10,8 +10,8 @@ public class Course extends Event {
     Professor lecturer;
     int lengthInMinutes;
 
-    public Course(String title, LocalDate date, String location, int capacity, String description, Professor lecturer,
-            int lengthInMinutes) {
+    public Course(String title, LocalDate date, String location, int capacity, String description,
+            int lengthInMinutes, Professor lecturer) {
         super(title, date, location, capacity, description);
 
         this.lecturer = lecturer;

@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 
 import attendees.Attendee;
-import attendees.Student;
-import attendees.Professor;
 
 public class AcademicFair extends Event implements HasMultiplePresenters {
     // Uma feira acadêmica é composta por diversas atividades
     // Em que participantes podem ser ouvintes e apresentadores
+    // Uma forma de computar a carga horária é estabelecer valores diferentes
+    // Para apresentador e ouvinte
     private LinkedList<Attendee> presenters;
     private int attendeeWorkloadInMinutes;
     private int presenterWorkloadInMinutes;
@@ -51,22 +51,5 @@ public class AcademicFair extends Event implements HasMultiplePresenters {
     @Override
     protected boolean acceptsAttendee(Attendee attendee) {
         return getRemainingCapacity() > 0;
-    }
-
-    public static void main(String[] args) {
-        Professor p = new Professor("Vandro", 1);
-        Attendee a = new Student("teste", 1);
-
-        try {
-            AcademicFair af = new AcademicFair("Feira de linguagens", LocalDate.now(), "Salvador, BA", 20,
-                    "Feira de linguagens de programação", 240, 480);
-            af.addAttendee(a);
-            af.addPresenter(p);
-
-            System.out.println(af.getAttendeeCertificateMessage(a));
-            System.out.println(af.getAttendeeCertificateMessage(p));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
