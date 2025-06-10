@@ -20,7 +20,7 @@ public class CommandHandler {
 
     public CommandHandler(Scanner userInput) {
         this.userInput = userInput;
-        
+
         menuActions.put(MenuOption.EXIT.code, () -> {
         });
         menuActions.put(MenuOption.REGISTER_EVENT.code, () -> registerEvent());
@@ -39,7 +39,7 @@ public class CommandHandler {
             Event event = EventBuilder.createEventFromUserInput(attendeesManager.getAttendees());
             eventsManager.add(event);
         } catch (Exception ex) {
-            System.out.println("Não foi possível cadastrar evento");
+            System.out.print("\n\nNão foi possível cadastrar evento\n\n");
             System.out.println(ex.getMessage());
         }
     }
@@ -49,7 +49,7 @@ public class CommandHandler {
             Attendee attendee = AttendeeBuilder.createAttendeeFromUserInput();
             attendeesManager.add(attendee);
         } catch (Exception ex) {
-            System.out.println("Não foi possível cadastrar participante");
+            System.out.print("\n\nNão foi possível cadastrar participante\n\n");
             System.out.println(ex.getMessage());
         }
     }
@@ -59,7 +59,7 @@ public class CommandHandler {
         Attendee attendee = attendeesManager.findByName(userInput.nextLine());
 
         if (attendee == null) {
-            System.out.println("Participante não encontrado");
+            System.out.print("\n\nParticipante não encontrado\n\n");
             return;
         }
 
@@ -67,7 +67,7 @@ public class CommandHandler {
         Event event = eventsManager.findByTitle(userInput.nextLine());
 
         if (event == null) {
-            System.out.println("Evento não encontrado");
+            System.out.print("\n\nEvento não encontrado\n\n");
             return;
         }
 
@@ -83,7 +83,7 @@ public class CommandHandler {
             else
                 ((HasMultiplePresenters) event).addPresenter(attendee);
         } catch (Exception ex) {
-            System.out.println("Não foi possível registrar participante");
+            System.out.print("\n\nNão foi possível registrar participante\n\n");
             System.out.println(ex.getMessage());
         }
     }
@@ -93,7 +93,7 @@ public class CommandHandler {
         Attendee attendee = attendeesManager.findByName(userInput.nextLine());
 
         if (attendee == null) {
-            System.out.println("Participante não encontrado");
+            System.out.print("\n\nParticipante não encontrado\n\n");
             return;
         }
 
@@ -101,7 +101,7 @@ public class CommandHandler {
         Event event = eventsManager.findByTitle(userInput.nextLine());
 
         if (event == null) {
-            System.out.println("Evento não encontrado");
+            System.out.print("\n\nEvento não encontrado\n\n");
             return;
         }
 

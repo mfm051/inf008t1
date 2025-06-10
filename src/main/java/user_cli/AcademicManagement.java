@@ -8,8 +8,13 @@ public class AcademicManagement {
     public static void main(String[] args) {
         CommandHandler handler = new CommandHandler(userInput);
 
+        System.out.print("\n\nSistema de eventos acadêmicos\n\n");
+
         while (true) {
+            System.out.print("\n\n");
             MenuOption.showMenu();
+            System.out.print("\n\n");
+
             System.out.print("Escolha uma opção: ");
             int choice;
 
