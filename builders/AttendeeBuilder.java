@@ -1,15 +1,14 @@
-package user_cli;
+package builders;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import attendees.Attendee;
-import attendees.AttendeeBuilderFunction;
-import attendees.AttendeesInputValidator;
 import attendees.ExternalAttendee;
 import attendees.Professor;
 import attendees.Student;
+import validators.AttendeesInputValidator;
 
 
 public class AttendeeBuilder {

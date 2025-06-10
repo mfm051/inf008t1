@@ -1,4 +1,6 @@
-package attendees;
+package builders;
+
+import attendees.Attendee;
 
 @FunctionalInterface
 public interface AttendeeBuilderFunction {

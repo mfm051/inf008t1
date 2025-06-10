@@ -1,4 +1,4 @@
-package user_cli;
+package builders;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -9,12 +9,12 @@ import java.util.Scanner;
 import attendees.Attendee;
 import attendees.Professor;
 import events.AcademicFair;
+
 import events.Course;
 import events.Event;
-import events.EventBuilderFunction;
-import events.EventsInputsValidator;
 import events.Talk;
 import events.Workshop;
+import validators.EventsInputsValidator;
 
 public class EventBuilder {
     private static final Map<String, EventBuilderFunction> eventBuilders = new HashMap<>();

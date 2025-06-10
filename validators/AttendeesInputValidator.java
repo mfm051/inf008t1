@@ -1,4 +1,4 @@
-package attendees;
+package validators;
 
 import java.util.Scanner;
 
