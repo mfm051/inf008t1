@@ -1,4 +1,4 @@
-package events;
+package user_cli;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -8,16 +8,23 @@ import java.util.Scanner;
 
 import attendees.Attendee;
 import attendees.Professor;
+import events.AcademicFair;
+import events.Course;
+import events.Event;
+import events.EventBuilderFunction;
+import events.EventsInputsValidator;
+import events.Talk;
+import events.Workshop;
 
-public class UserEventBuilder {
+public class EventBuilder {
     private static final Map<String, EventBuilderFunction> eventBuilders = new HashMap<>();
     private static final Scanner userInput = new Scanner(System.in);
 
     static {
-        eventBuilders.put("feira acadêmica", UserEventBuilder::buildAcademicFair);
-        eventBuilders.put("palestra", UserEventBuilder::buildTalk);
-        eventBuilders.put("curso", UserEventBuilder::buildCourse);
-        eventBuilders.put("workshop", UserEventBuilder::buildWorkshop);
+        eventBuilders.put("feira acadêmica", EventBuilder::buildAcademicFair);
+        eventBuilders.put("palestra", EventBuilder::buildTalk);
+        eventBuilders.put("curso", EventBuilder::buildCourse);
+        eventBuilders.put("workshop", EventBuilder::buildWorkshop);
     }
 
     public static Event createEventFromUserInput(List<Attendee> attendees) throws Exception {

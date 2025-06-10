@@ -10,6 +10,11 @@ public class Professor implements Attendee {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public String getFullInfo() {
         return "professor" + " " + name + " " + "matrícula" + " " + professorId;
     }

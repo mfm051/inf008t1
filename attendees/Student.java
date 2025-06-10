@@ -10,6 +10,11 @@ public class Student implements Attendee {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public String getFullInfo() {
         return "estudante" + " " + name + " " + "matrícula" + " " + studentId;
     }

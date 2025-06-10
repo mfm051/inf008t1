@@ -1,18 +1,25 @@
-package attendees;
+package user_cli;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import attendees.Attendee;
+import attendees.AttendeeBuilderFunction;
+import attendees.AttendeesInputValidator;
+import attendees.ExternalAttendee;
+import attendees.Professor;
+import attendees.Student;
 
-public class UserAttendeeBuider {
+
+public class AttendeeBuilder {
     private static final Map<String, AttendeeBuilderFunction> attendeeBuilders = new HashMap<>();
     private static final Scanner userInput = new Scanner(System.in);
 
     static {
-        attendeeBuilders.put("professor", UserAttendeeBuider::buildProfessor);
-        attendeeBuilders.put("aluno", UserAttendeeBuider::buildStudent );
-        attendeeBuilders.put("participante externo", UserAttendeeBuider::buildExternalAttendee);
+        attendeeBuilders.put("professor", AttendeeBuilder::buildProfessor);
+        attendeeBuilders.put("aluno", AttendeeBuilder::buildStudent );
+        attendeeBuilders.put("participante externo", AttendeeBuilder::buildExternalAttendee);
     }
 
     public static Attendee createAttendeeFromUserInput() throws Exception {

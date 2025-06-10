@@ -10,6 +10,11 @@ public class ExternalAttendee implements Attendee {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public String getFullInfo() {
         return name + " " + "CPF" + " " + externalId;
     }
